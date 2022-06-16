@@ -1,7 +1,7 @@
 ---
 - hosts: "deb"
   become: no
-  gather facts: no
+  gather_facts: no
   tasks:
   - name: "Execute program"
     command: whoami
