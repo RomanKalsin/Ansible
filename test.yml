@@ -1,5 +1,5 @@
 ---
-- hosts: deb
+- hosts: "deb"
   become: no
   gather facts: no
   tasks:
