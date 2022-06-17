@@ -1,12 +1,6 @@
 ---
 - hosts: "deb"
-  become: false
   gather_facts: false
   tasks:
-  - name: "execute programm"
-    ansible.builtin.command: whoami
-    registered: who
-  - name: "Result"
-    debug:
-      msg: "{{who}}"
-...
+  - name: Example from an Ansible Playbook
+    ansible.builtin.ping:
