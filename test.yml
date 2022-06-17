@@ -4,9 +4,14 @@
   gather_facts: false
   tasks:
   - name: "Execute program"
-    command: whoami
+    ansible.builtin.command: whoami
     registered: who
   - name: "Result"
     debug:
       msg: "{{who}}"
 ...
+
+
+
+ansible.builtin.command: cat {{ myfile|quote }}
+  register: myoutput
