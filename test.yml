@@ -8,5 +8,5 @@
     registered: who
   - name: "Result"
     debug:
-      msg: {{who}}
+      msg: "{{who}}"
 ...
