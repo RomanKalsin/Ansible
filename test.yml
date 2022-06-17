@@ -10,8 +10,3 @@
     debug:
       msg: "{{who}}"
 ...
-
-
-
-ansible.builtin.command: cat {{ myfile|quote }}
-  register: myoutput
