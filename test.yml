@@ -3,10 +3,10 @@
   become: false
   gather_facts: false
   tasks:
-  - name: "Execute program"
+  - name: "execute programm"
     ansible.builtin.command: whoami
     registered: who
   - name: "Result"
     debug:
-      msg: "{{who}}"
+      msg: {{who}}
 ...
