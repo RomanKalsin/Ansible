@@ -1,9 +1,0 @@
----
-- hosts: "debian_test"
-  tasks:
-    - name: "/etc/network/interfaces edit"
-      ansible.builtin.template:
-        src: "/root/playbooks/template/interfaces"
-        dest: "/etc/network/interfaces"
-        backup: "yes"
-...

@@ -1,5 +1,5 @@
 ---
-- hosts: "deb"
+- hosts: "{{ hosts_group }}"
   gather_facts: false
   tasks:
   - name: Example from an Ansible Playbook

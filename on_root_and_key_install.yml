@@ -1,5 +1,5 @@
 ---
-- hosts: "debian_test"
+- hosts: "debian"
   become: true
   become_method: "su"
   become_user: "root"
@@ -8,10 +8,15 @@
       lineinfile:
         path: "/etc/ssh/sshd_config"
         regex: "(#P|P)ermitRootLogin.*"
-        line: "#PermitRootLogin no"
+        line: "PermitRootLogin yes"
         state: "present"
     - name: "reboot sshd"
       service:
         name: "sshd"
         state: "reloaded"
+    - name: "Set authorized key"
+      ansible.posix.authorized_key:
+        user: "root"
+        state: "present"
+        key: "{{ ssh_key }}"
 ...
