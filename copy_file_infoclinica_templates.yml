@@ -5,6 +5,8 @@
       ansible.builtin.copy:
         src: "/files/infoclinika_templates/"
         dest: "/mnt/data/infodent/Template/"
+        owner: "nobody"
+        group: "nogroup"
         force: yes
         mode: '0777'
 ...
