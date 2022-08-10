@@ -1,5 +1,5 @@
 ---
-- hosts: "debian"
+- hosts: "{{ hosts_group }}"
   tasks:
     - name: "Add an /etc/hosts entry for your IP address"
       ansible.builtin.template:
