@@ -1,13 +1,6 @@
 ---
 - hosts: "{{ hosts_group }}"
-  vars: 
-    test: "{{ ansible_lsb.major_release }}"
   tasks:
-    - name: major_release
-      debug: msg="{{ ansible_lsb.major_release }}"
-    - name: ansible_os_family
-      debug: msg="{{ ansible_os_family }}"
-    - name: "config debian repository"
       lineinfile:
         path: "/etc/apt/sources.list"
         regex: "{{ item.reg }}"
@@ -19,5 +12,5 @@
       - {reg: "deb-src http.* bullseye-security main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian-security bullseye-security main contrib non-free"}
       - {reg: "deb http.* bullseye-updates main contrib non-free", line: "deb http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
       - {reg: "deb-src http.* bullseye-updates main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
-      when: ansible_os_family == "Debian" and test == "11"
+      when: "{{ ansible_os_family }}" == "Debian" and "{{ ansible_lsb.major_release }}" == "11"
 ...
