@@ -19,5 +19,5 @@
       - {reg: "deb-src http.* bullseye-security main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian-security bullseye-security main contrib non-free"}
       - {reg: "deb http.* bullseye-updates main contrib non-free", line: "deb http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
       - {reg: "deb-src http.* bullseye-updates main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
-      when: "{{ ansible_os_family }}" == "Debian" and "{{ ansible_lsb.major_release }}" == "11"
+      when: ansible_os_family == "Debian" and test == "11"
 ...
