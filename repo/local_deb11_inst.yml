@@ -1,8 +1,8 @@
 ---
 - hosts: "{{ hosts_group }}"
   tasks:
-    - name: ansible_lsb
-      debug: msg="{{ ansible_lsb }}"
+    - name: release
+      debug: msg="{{ ansible_lsb.release }}"
     - name: ansible_os_family
       debug: msg="{{ ansible_os_family }}"
     - name: "config debian repository"
