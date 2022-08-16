@@ -1,0 +1,17 @@
+---
+- hosts: "{{ hosts_group }}"
+  tasks:
+    - name: "config debian repository"
+      lineinfile:
+        path: "/etc/apt/sources.list"
+        regex: "{{ item.reg }}"
+        line: "{{ item.line }}"
+      with_items:
+      - {reg: "deb http.* bullseye main", line: "deb http://repo.sadkomed.local/debian bullseye main"}
+      - {reg: "deb-src http.* bullseye main", line: "deb-src http://repo.sadkomed.local/debian bullseye main"}
+      - {reg: "deb http.* bullseye-security main contrib non-free", line: "deb http://repo.sadkomed.local/debian-security bullseye-security main contrib non-free"}
+      - {reg: "deb-src http.* bullseye-security main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian-security bullseye-security main contrib non-free"}
+      - {reg: "deb http.* bullseye-updates main contrib non-free", line: "deb http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
+      - {reg: "deb-src http.* bullseye-updates main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
+      when: ansible_os_family == "Debian" and release == "11"
+...
