@@ -21,6 +21,6 @@
     
     - name: "config proxmox repository"
       ansible.builtin.debug:
-        msg: kernel
+        msg: "{{ ansible_kernel_version }}"
       when: kernel | regex_search(".*PVE.*")
 ...
