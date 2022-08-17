@@ -4,10 +4,6 @@
     os: "{{ ansible_os_family }}" 
     release: "{{ ansible_lsb.release }}"
   tasks:
-    - name: major_release
-      debug: msg="{{ ansible_lsb.major_release }}"
-    - name: ansible_os_family
-      debug: msg="{{ ansible_os_family }}"
     - name: "config debian repository"
       lineinfile:
         path: "/etc/apt/sources.list"
