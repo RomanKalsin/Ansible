@@ -1,6 +1,7 @@
 ---
 - hosts: "{{ hosts_group }}"
   vars:
+    kernel: "{{ ansible_kernel_version }}"
     os: "{{ ansible_os_family }}" 
     release: "{{ ansible_lsb.release }}"
   tasks:
@@ -16,5 +17,10 @@
       - {reg: "deb-src http.* bullseye-security main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian-security bullseye-security main contrib non-free"}
       - {reg: "deb http.* bullseye-updates main contrib non-free", line: "deb http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
       - {reg: "deb-src http.* bullseye-updates main contrib non-free", line: "deb-src http://repo.sadkomed.local/debian/ bullseye-updates main contrib non-free"}
-      when: os == "Debian" and release == "12"
+      when: os == "Debian" and release == "11"
+    
+    - name: "config proxmox repository"
+      ansible.builtin.debug:
+        msg: kernel
+      when: kernel == ".*PVE.*"
 ...
