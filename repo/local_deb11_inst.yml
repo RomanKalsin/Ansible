@@ -22,5 +22,5 @@
     - name: "config proxmox repository"
       ansible.builtin.debug:
         msg: kernel
-      when: kernel == ".*PVE.*"
+      when: kernel | regex_search(".*PVE.*")
 ...
