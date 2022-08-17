@@ -20,7 +20,9 @@
       when: os == "Debian" and release == "11"
     
     - name: "config proxmox repository"
-      ansible.builtin.debug:
-        msg: "{{ ansible_kernel_version }}"
+      lineinfile:
+        path: "/etc/apt/sources.list.d/pve-install-repo.list"
+        regex: "deb [arch=amd64].*bullseye pve-no-subscription"
+        line: "deb [arch=amd64] http://repo.sadkomed.local/pve bullseye pve-no-subscription"
       when: kernel | regex_search(".*PVE.*")
 ...
