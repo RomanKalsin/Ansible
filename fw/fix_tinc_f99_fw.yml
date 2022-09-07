@@ -4,8 +4,8 @@
     - name: add f99_fw_kdl in config
       lineinfile:
         dest: "/etc/tinc/sadkomed_ix/hosts/f99_fw"
-        regexp: 'Address = 95.172.55.226'
-        line: 'Address = 89.109.52.229'
+        regexp: 'Address = 89.109.52.229'
+        line: 'Address = 95.172.55.226'
         backup: "yes"
     - name: 'Reboot Tinc service'
       service:
