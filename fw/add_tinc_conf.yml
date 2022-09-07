@@ -4,12 +4,12 @@
     - name: "copy config file"
       ansible.builtin.copy:
         src: "/files/config/"
-        dest: "/root/"
+        dest: "/etc/tinc/sadkomed_ix/hosts/"
         owner: "root"
         group: "root"
     - name: del line in config
       lineinfile:
-        dest: "/root/tinc.conf"
+        dest: "/etc/tinc/sadkomed_ix/tinc.conf"
         regexp: '{{ item.reg }}'
         state: 'absent'
         backup: 'yes'
@@ -19,17 +19,17 @@
       - {reg: 'ConnectTo = f08_fw'}
     - name: add f99_fw_kdl in config
       lineinfile:
-        dest: "/root/tinc.conf"
+        dest: "/etc/tinc/sadkomed_ix/tinc.conf"
         regexp: '^'
         line: 'ConnectTo = f99_fw_kdl'
     - name: add f08_fw in config
       lineinfile:
-        dest: "/root/tinc.conf"
+        dest: "/etc/tinc/sadkomed_ix/tinc.conf"
         insertafter: 'ConnectTo = f99_fw_kdl'
         line: 'ConnectTo = f08_fw'
     - name: add f99_fw in config
       lineinfile:
-        dest: "/root/tinc.conf"
+        dest: "/etc/tinc/sadkomed_ix/tinc.conf"
         insertafter: 'ConnectTo = f08_fw'
         line: 'ConnectTo = f99_fw'
     - name: 'Reboot Tinc service'
