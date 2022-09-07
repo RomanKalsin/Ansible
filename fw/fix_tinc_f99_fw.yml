@@ -7,4 +7,8 @@
         regexp: 'Address = 95.172.55.226'
         line: 'Address = 89.109.52.229'
         backup: "yes"
+    - name: 'Reboot Tinc service'
+      service:
+        name: 'tinc.service'
+        state: 'restarted'
 ...
