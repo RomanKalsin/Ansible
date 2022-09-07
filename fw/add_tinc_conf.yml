@@ -21,17 +21,12 @@
       lineinfile:
         dest: "/etc/tinc/sadkomed_ix/tinc.conf"
         regexp: '^'
-        line: 'ConnectTo = f99_fw_kdl'
+        line: 'ConnectTo = f99_fw'
     - name: add f08_fw in config
       lineinfile:
         dest: "/etc/tinc/sadkomed_ix/tinc.conf"
-        insertafter: 'ConnectTo = f99_fw_kdl'
+        insertafter: 'ConnectTo = f99_fw'
         line: 'ConnectTo = f08_fw'
-    - name: add f99_fw in config
-      lineinfile:
-        dest: "/etc/tinc/sadkomed_ix/tinc.conf"
-        insertafter: 'ConnectTo = f08_fw'
-        line: 'ConnectTo = f99_fw'
     - name: 'Reboot Tinc service'
       service:
         name: 'tinc.service'
