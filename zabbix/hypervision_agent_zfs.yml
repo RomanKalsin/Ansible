@@ -8,7 +8,7 @@
         state: 'latest'
     - name: 'zfsparameter.conf copy'
       ansible.builtin.copy:
-        src: "./template/zfsparameter.conf"
+        src: "./files/zfsparameter.conf"
         dest: "/etc/zabbix/zabbix_agentd.conf.d/zfsparameter.conf"
     - name: 'Configuration zabbix'
       lineinfile:
