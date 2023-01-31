@@ -1,0 +1,27 @@
+---
+- hosts: "{{ hosts_group }}"
+  tasks:
+    - name: 'Install Zabbix'
+      apt:
+        name: 'zabbix-agent'
+        update_cache: 'yes'
+        state: 'latest'
+    - name: 'zfsparameter.conf copy'
+      ansible.builtin.copy:
+        src: "./template/zfsparameter.conf"
+        dest: "/etc/zabbix/zabbix_agentd.conf.d/zfsparameter.conf"
+    - name: 'Configuration zabbix'
+      lineinfile:
+        path: '/etc/zabbix/zabbix_agentd.conf'
+        regex: '{{ item.reg }}'
+        line: '{{ item.line }}'
+      with_items:
+      - {reg: 'Server=.*', line: 'Server=192.168.253.40'}
+      - {reg: 'ServerActive=.*', line: 'ServerActive=192.168.253.40'}
+      - {reg: '(#H|H)ostname=.*', line: 'Hostname={{ ansible_nodename }}'}
+      - {reg: '(#H|H)ostMetadata=.*', line: 'HostMetadata=hypervison'}
+    - name: 'Reboot Zabbix-agent service'
+      service:
+        name: 'zabbix-agent'
+        state: 'restarted'
+...
