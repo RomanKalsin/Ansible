@@ -1,0 +1,12 @@
+---
+- hosts: "{{ hosts_group }}"
+  tasks:
+    - name: 'zfsparameter.conf copy'
+      ansible.builtin.copy:
+        src: "./files/zfsparameter.conf"
+        dest: "/etc/zabbix/zabbix_agentd.conf.d/zfsparameter.conf"
+    - name: 'Reboot Zabbix-agent service'
+      service:
+        name: 'zabbix-agent'
+        state: 'restarted'
+...
