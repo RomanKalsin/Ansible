@@ -6,6 +6,6 @@
         name: "{{ item }}"
         state: restarted
       with_items:
-      - Spooler
-      - SEMgrSvc
+      - Infoclinica ReplServer
+      - Infoclinica Analisserver ALFALAB
 ...
