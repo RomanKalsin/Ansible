@@ -30,6 +30,15 @@
         group: root
         mode: 0644
 
+    - name: "Install other packages"
+      apt:
+        name: "{{ item }}"
+        update_cache: "yes"
+        state: "latest"
+        install_recommends: "yes"
+      with_items:
+      - bridge-utils
+
     - name: "Install the Proxmox VE Kernel"
       apt:
         name: proxmox-default-kernel
@@ -70,7 +79,6 @@
       - postfix
       - open-iscsi
       - chrony
-      - bridge-utils
     
     - name: "Remove the os-prober Package"
       apt:
