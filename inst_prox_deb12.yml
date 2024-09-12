@@ -61,13 +61,6 @@
       delegate_to: localhost
       when: reboot.changed
 
-    - name: "off enterprise repository"
-      lineinfile:
-        path: "/etc/apt/sources.list.d/pve-enterprise.list"
-        regex: "deb https://.*"
-        line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
-        state: "present"
-
     - name: "Install other packages"
       apt:
         name: "{{ item }}"
@@ -84,6 +77,13 @@
       apt:
         name: "os-prober"
         state: "absent"
+
+    - name: "off enterprise repository"
+      lineinfile:
+        path: "/etc/apt/sources.list.d/pve-enterprise.list"
+        regex: "deb https://.*"
+        line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
+        state: "present"
 
     - name: search for standard kernels
       shell: "$( which dpkg ) --get-selections linux-image* | $( which grep ) -i install | $(which awk) '{print $1}'"
