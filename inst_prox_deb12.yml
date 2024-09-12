@@ -38,6 +38,9 @@
         install_recommends: "yes"
       with_items:
       - bridge-utils
+      - postfix
+      - open-iscsi
+      - chrony
 
     - name: "Install the Proxmox VE Kernel"
       apt:
@@ -69,14 +72,6 @@
         install_recommends: "yes"
       with_items:
       - proxmox-ve
-      - postfix
-      - open-iscsi
-      - chrony
-    
-    - name: "Remove the os-prober Package"
-      apt:
-        name: "os-prober"
-        state: "absent"
 
     - name: "off enterprise repository"
       lineinfile:
@@ -84,6 +79,11 @@
         regex: "deb https://.*"
         line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
         state: "present"
+
+    - name: "Remove the os-prober Package"
+      apt:
+        name: "os-prober"
+        state: "absent"
 
     - name: search for standard kernels
       shell: "$( which dpkg ) --get-selections linux-image* | $( which grep ) -i install | $(which awk) '{print $1}'"
