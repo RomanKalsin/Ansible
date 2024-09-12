@@ -36,7 +36,7 @@
         update_cache: "yes"
         state: "latest"
         install_recommends: "yes"
-        register: kernel_update
+      register: kernel_update
 
     - name: "Reboot"
       shell: nohup bash -c "sleep 2s && reboot" &
