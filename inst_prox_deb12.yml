@@ -30,13 +30,25 @@
         group: root
         mode: 0644
 
+    - name: "Install other packages"
+      apt:
+        name: "{{ item }}"
+        update_cache: "yes"
+        state: "latest"
+        install_recommends: "yes"
+      with_items:
+      - bridge-utils
+      - postfix
+      - open-iscsi
+      - chrony
+
     - name: "Install the Proxmox VE Kernel"
       apt:
         name: proxmox-default-kernel
         update_cache: "yes"
         state: "latest"
         install_recommends: "yes"
-        register: kernel_update
+      register: kernel_update
 
     - name: "Reboot"
       shell: nohup bash -c "sleep 2s && reboot" &
@@ -46,18 +58,11 @@
       ignore_errors: true
       register: reboot      
       
-      
-    - name: "Wait for the server to restart"
-      local_action: wait_for host={{ inventory_hostname }} port=22 delay=10 timeout=900 state=started
-      sudo: false
+    - name: Wait for the host to finish rebooting
+      local_action: wait_for host={{ inventory_hostname }} port=22 delay=20 connect_timeout=900
+      become: false
+      delegate_to: localhost
       when: reboot.changed
-
-    - name: "off enterprise repository"
-      lineinfile:
-        path: "/etc/apt/sources.list.d/pve-enterprise.list"
-        regex: "deb https://.*"
-        line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
-        state: "present"
 
     - name: "Install other packages"
       apt:
@@ -67,11 +72,14 @@
         install_recommends: "yes"
       with_items:
       - proxmox-ve
-      - postfix
-      - open-iscsi
-      - chrony
-      - bridge-utils
-    
+
+    - name: "off enterprise repository"
+      lineinfile:
+        path: "/etc/apt/sources.list.d/pve-enterprise.list"
+        regex: "deb https://.*"
+        line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
+        state: "present"
+
     - name: "Remove the os-prober Package"
       apt:
         name: "os-prober"
