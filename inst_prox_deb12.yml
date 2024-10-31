@@ -48,7 +48,7 @@
       
       
     - name: "Wait for the server to restart"
-      local_action: wait_for host={{ inventory_hostname }} port=22 delay=10 timeout=300 state=started
+      local_action: wait_for host={{ inventory_hostname }} port=22 delay=10 timeout=900 state=started
       sudo: false
       when: reboot.changed
 

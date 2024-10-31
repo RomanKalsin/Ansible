@@ -16,7 +16,7 @@ iface vmbr1 inet static
         bridge-stp off
         bridge-fd 0
         bridge_waitport 0
-        dns-nameservers 192.168.9.3 8.8.8.8
+        dns-nameservers 192.168.9.4 8.8.8.8
         dns-search sadkomed.local
 
 #auto vmbr0
