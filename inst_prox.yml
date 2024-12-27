@@ -2,8 +2,8 @@
 - hosts: "{{ hosts_group }}"
   roles:
    - role: inst_prox_deb12
-      when: "{{ ansible_distribution_release }}" == "bookworm"
+      when: ansible_distribution_release == "bookworm"
 
     - role: inst_prox_deb11
-      when: "{{ ansible_distribution_release }}" == "bullseye"
+      when: ansible_distribution_release == "bullseye"
 ...
