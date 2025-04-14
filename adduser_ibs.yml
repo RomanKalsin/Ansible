@@ -4,5 +4,6 @@
   become_method: "su"
   become_user: "root"
   roles:
+    - install_key
     - usr_ibs
 ...

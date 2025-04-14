@@ -1,4 +1,4 @@
 ---
         - name: "set authorized key"
-          ansible.posix.authorized_key: user=root state=present key={{ ssh_key }}
+          ansible.posix.authorized_key: user={{ key_user }} state=present key={{ ssh_key }}
 ...
