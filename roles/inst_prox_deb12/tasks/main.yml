@@ -57,7 +57,7 @@
   register: reboot      
       
 - name: Wait for the host to finish rebooting
-  local_action: wait_for host={{ inventory_hostname }} port=22 delay=20 connect_timeout=1200
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=120 connect_timeout=1200
   become: false
   delegate_to: localhost
   when: reboot.changed
