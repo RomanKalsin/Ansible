@@ -41,6 +41,13 @@
     group: root
     mode: 0644
 
+- name: "off enterprise repository"
+  lineinfile:
+    path: "/etc/apt/sources.list.d/pve-enterprise.list"
+    regex: "deb https://.*"
+    line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
+    state: "present"
+
 - name: "Install other packages"
   apt:
     name: "{{ item }}"
@@ -83,13 +90,6 @@
   - postfix
   - open-iscsi
   - chrony
-
-- name: "off enterprise repository"
-  lineinfile:
-    path: "/etc/apt/sources.list.d/pve-enterprise.list"
-    regex: "deb https://.*"
-    line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
-    state: "present"
 
 - name: "Remove the os-prober Package"
   apt:
