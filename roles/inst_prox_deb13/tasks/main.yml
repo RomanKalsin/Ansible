@@ -6,7 +6,6 @@
     backup: "yes"
         
 - name: "Add Proxmox VE repository key for Trixie"
-  become: yes
   get_url:
     url: "https://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
     dest: "/usr/share/keyrings/proxmox-archive-keyring.gpg"
@@ -16,7 +15,6 @@
     checksum: "sha256:136673be77aba35dcce385b28737689ad64fd785a797e57897589aed08db6e45"
     
 - name: "Create Proxmox repository configuration (deb822 format)"
-  become: yes
   copy:
     dest: "/etc/apt/sources.list.d/pve-install-repo.sources"
     content: |
