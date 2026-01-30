@@ -4,15 +4,6 @@
     src: "./template/hosts"
     dest: "/etc/hosts"
     backup: "yes"
-        
-#- name: "Add Proxmox VE repository key for Trixie"
-#  get_url:
-#    url: "https://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
-#    dest: "/usr/share/keyrings/proxmox-archive-keyring.gpg"
-#    mode: '0644'
-#    owner: root
-#    group: root
-#    checksum: "sha256:136673be77aba35dcce385b28737689ad64fd785a797e57897589aed08db6e45"
     
 - name: "Create Proxmox repository configuration (deb822 format)"
   copy:
@@ -41,12 +32,6 @@
     group: root
     mode: 0644
 
-- name: "off enterprise repository"
-  replace:
-    path: /etc/apt/sources.list.d/pve-enterprise.sources
-    regexp: '^(?!\s*#)(.+)'
-    replace: '# \1'
-
 - name: "Install other packages"
   apt:
     name: "{{ item }}"
@@ -63,20 +48,6 @@
     state: "latest"
     install_recommends: "yes"
   register: kernel_update
-
-- name: "Reboot"
-  shell: nohup bash -c "sleep 2s && reboot" &
-  when: kernel_update.changed
-  async: 0
-  poll: 0
-  ignore_errors: true
-  register: reboot      
-      
-- name: Wait for the host to finish rebooting
-  local_action: wait_for host={{ inventory_hostname }} port=22 delay=120 connect_timeout=1200
-  become: false
-  delegate_to: localhost
-  when: reboot.changed
 
 - name: "Install other packages"
   apt:
@@ -110,11 +81,17 @@
 - name: "Update GRUB"
   command: "update-grub"
 
+- name: "Check if reboot is required"
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
 - name: "rebooting the server"
   shell: nohup bash -c "sleep 2s && reboot" &
   async: 0
   poll: 0
   ignore_errors: yes
+  when: reboot_required_file.stat.exists or kernel_update.changed
   register: reboot
   tags: reboot
 ...
