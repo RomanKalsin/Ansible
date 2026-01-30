@@ -52,6 +52,13 @@
     install_recommends: "yes"
   register: kernel_update
 
+- name: "Install the Proxmox VE"
+  apt:
+    name: proxmox-ve
+    update_cache: "yes"
+    state: "latest"
+    install_recommends: "yes"
+
 - name: "off enterprise repository"
   replace:
     path: /etc/apt/sources.list.d/pve-enterprise.sources
@@ -65,7 +72,6 @@
     state: "latest"
     install_recommends: "yes"
   with_items:
-  - proxmox-ve
   - postfix
   - open-iscsi
   - chrony
