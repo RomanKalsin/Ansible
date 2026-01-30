@@ -52,6 +52,12 @@
     install_recommends: "yes"
   register: kernel_update
 
+- name: "off enterprise repository"
+  replace:
+    path: /etc/apt/sources.list.d/pve-enterprise.sources
+    regexp: '^(?!\s*#)(.+)'
+    replace: '# \1'
+
 - name: "Install other packages"
   apt:
     name: "{{ item }}"
