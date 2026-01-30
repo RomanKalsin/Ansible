@@ -1,4 +1,8 @@
 ---
+- name: Include DNS servers variables
+  include_vars:
+    file: dns_servers.yml
+
 - name: "Add an /etc/hosts entry for your IP address"
   ansible.builtin.template:
     src: "./template/hosts"
