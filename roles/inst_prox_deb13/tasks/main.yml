@@ -52,6 +52,20 @@
     install_recommends: "yes"
   register: kernel_update
 
+- name: "Reboot"
+  shell: nohup bash -c "sleep 2s && reboot" &
+  when: kernel_update.changed
+  async: 0
+  poll: 0
+  ignore_errors: true
+  register: reboot      
+      
+- name: Wait for the host to finish rebooting
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=120 connect_timeout=1200
+  become: false
+  delegate_to: localhost
+  when: reboot.changed
+
 - name: "Install the Proxmox VE"
   apt:
     name: proxmox-ve
@@ -106,7 +120,7 @@
   async: 0
   poll: 0
   ignore_errors: yes
-  when: reboot_required_file.stat.exists or kernel_update.changed
+  when: reboot_required_file.stat.exists
   register: reboot
   tags: reboot
 ...
