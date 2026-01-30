@@ -35,6 +35,13 @@
     group: root
     mode: 0644
 
+- name: Add DNS servers
+  lineinfile:
+    path: /etc/resolv.conf
+    line: "nameserver {{ item }}"
+    state: present
+  loop: "{{ dns_servers }}"
+
 - name: "Install other packages"
   apt:
     name: "{{ item }}"
