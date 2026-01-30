@@ -5,14 +5,14 @@
     dest: "/etc/hosts"
     backup: "yes"
         
-- name: "Add Proxmox VE repository key for Trixie"
-  get_url:
-    url: "https://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
-    dest: "/usr/share/keyrings/proxmox-archive-keyring.gpg"
-    mode: '0644'
-    owner: root
-    group: root
-    checksum: "sha256:136673be77aba35dcce385b28737689ad64fd785a797e57897589aed08db6e45"
+#- name: "Add Proxmox VE repository key for Trixie"
+#  get_url:
+#    url: "https://enterprise.proxmox.com/debian/proxmox-archive-keyring-trixie.gpg"
+#    dest: "/usr/share/keyrings/proxmox-archive-keyring.gpg"
+#    mode: '0644'
+#    owner: root
+#    group: root
+#    checksum: "sha256:136673be77aba35dcce385b28737689ad64fd785a797e57897589aed08db6e45"
     
 - name: "Create Proxmox repository configuration (deb822 format)"
   copy:
@@ -42,11 +42,10 @@
     mode: 0644
 
 - name: "off enterprise repository"
-  lineinfile:
-    path: "/etc/apt/sources.list.d/pve-enterprise.list"
-    regex: "deb https://.*"
-    line: "#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise"
-    state: "present"
+  replace:
+    path: /etc/apt/sources.list.d/pve-enterprise.sources
+    regexp: '^(?!\s*#)(.+)'
+    replace: '# \1'
 
 - name: "Install other packages"
   apt:
